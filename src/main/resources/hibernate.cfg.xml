@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration">
+<hibernate-configuration>
+
+    <session-factory>
+        <!-- JDBC Database connection settings -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/pharmacie</property>
+        <property name="hibernate.connection.username">fabio</property>
+        <property name="hibernate.connection.password">fabio2002</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- Show all executed SQL to stdout -->
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.generate_statistics">false</property>
+
+
+        <!-- Automatically drop and re-create the database schema on startup -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+
+        <mapping class="com.pharmacie.models.Medicine"/>
+        <mapping class="com.pharmacie.models.Purchase"/>
+        <mapping class="com.pharmacie.models.Client"/>
+        <mapping class="com.pharmacie.models.User"/>
+        <mapping class="com.pharmacie.models.Stock"/>
+        <mapping class="com.pharmacie.models.Role"/>
+       <!-- <mapping class="com.pharmacie.models.UserRole"/> -->
+        <mapping class="com.pharmacie.models.MedicinePurchase"/>
+        <mapping class="com.pharmacie.models.Supplier"/>
+        <mapping class="com.pharmacie.models.SupplierCategory"/>
+        <mapping class="com.pharmacie.models.Category"/>
+        <mapping class="com.pharmacie.models.Login"/>
+        <mapping class="com.pharmacie.models.PaymentMode"/>
+
+    </session-factory>
+
+</hibernate-configuration>
