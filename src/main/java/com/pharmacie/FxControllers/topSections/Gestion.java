@@ -20,7 +20,6 @@ import javafx.scene.layout.StackPane;
 public class Gestion implements Initializable{
 
     private Map<String, Parent> pages = new HashMap<>();
-    private Map<String, Object> controllers = new HashMap<>();
 
     Parent selectedSection = null;
 
@@ -59,7 +58,7 @@ public class Gestion implements Initializable{
             pages.put("produits", loadFxml("produits"));
             pages.put("stocks", loadFxml("stocks"));
             pages.put("paiements", loadFxml("paiements"));
-            pages.put("roles", loadFxml("roles"));
+            //pages.put("roles", loadFxml("roles"));
             pages.put("utilisateurs", loadFxml("utilisateurs"));
             
         } catch (IOException e) {

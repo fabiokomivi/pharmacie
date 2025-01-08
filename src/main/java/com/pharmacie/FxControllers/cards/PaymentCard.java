@@ -1,7 +1,6 @@
 package com.pharmacie.FxControllers.cards;
 
 import com.pharmacie.models.PaymentMode;
-import com.pharmacie.models.Supplier;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,8 +17,6 @@ public class PaymentCard {
     @FXML
     private Label name;
 
-    @FXML
-    private Label description;
 
     @FXML
     private ImageView paymentImage;
@@ -27,7 +24,7 @@ public class PaymentCard {
     public void setData(PaymentMode paymentMode ) {
         this.paymentMode = paymentMode;
         name.setText(paymentMode.getName());
-        description.setText(paymentMode.getDescription());
+
     }
 
     public void toggle() {
