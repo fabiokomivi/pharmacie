@@ -44,4 +44,8 @@ public class PaymentCard {
 
     }
 
+    public PaymentMode getPaymentMode() {
+        return paymentMode;
+    }
+
 }

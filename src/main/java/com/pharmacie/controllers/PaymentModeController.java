@@ -15,8 +15,7 @@ public class PaymentModeController {
     }
 
     // Ajouter un mode de paiement
-    public void addPaymentMode(String name, String description) {
-        PaymentMode paymentMode = new PaymentMode(name, description);
+    public void savePaymentMode(PaymentMode paymentMode) {
         paymentModeService.savePaymentMode(paymentMode);
     }
 

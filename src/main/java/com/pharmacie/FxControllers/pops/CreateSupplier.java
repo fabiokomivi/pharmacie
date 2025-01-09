@@ -57,8 +57,6 @@ public class CreateSupplier implements Initializable{
     @FXML
     private VBox root;
 
-    private Supplier addedSupplier;
-
     @FXML
     void onClose(ActionEvent event) {
         closeWindow(event);
@@ -74,8 +72,8 @@ public class CreateSupplier implements Initializable{
             final String supplierEmail = email.getText();
             final String supplierContact = contact.getText();
 
-            addedSupplier = new Supplier(name, supplierContact, supplierEmail);
-            supplierController.saveSupplier(addedSupplier);
+            supplier = new Supplier(name, supplierContact, supplierEmail);
+            supplierController.saveSupplier(supplier);
 
             for (Node node : categoriesBox.getChildren()) {
                 SupplierCategoryCard supplierCategoryCard = (SupplierCategoryCard) node.getUserData();
@@ -88,6 +86,7 @@ public class CreateSupplier implements Initializable{
                     supplierCategoryController.saveSupplierCategory(supplierCategory);
                 }
             }
+
         } else {
             List<SupplierCategory> toRemove = new ArrayList<>();
 
