@@ -16,6 +16,10 @@
     -fx-cursor: hand;
 }
 
+.small {
+    -fx-padding: 3;
+}
+
 .card:hover {
     -fx-background-color: #8fc886;
 }
