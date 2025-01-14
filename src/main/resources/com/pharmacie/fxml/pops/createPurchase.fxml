@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -12,21 +13,36 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="785.0" styleClass="card" stylesheets="@../../CSS/purchaseCard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pharmacie.FxControllers.pops.CreatePurchase">
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="888.0" styleClass="card" stylesheets="@../../CSS/purchaseCard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pharmacie.FxControllers.pops.CreatePurchase">
    <children>
       <VBox prefHeight="600.0" prefWidth="785.0" spacing="10.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="134.0" prefWidth="710.0" spacing="25.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="6.0" prefWidth="866.0">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="198.0" prefWidth="238.0" spacing="5.0" styleClass="tab">
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="246.0" text="achat" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#onClose" prefHeight="25.0" prefWidth="25.0" styleClass="close">
+                     <graphic>
+                        <SVGPath content="M16 16L12 12M12 12L8 8M12 12L16 8M12 12L8 16" styleClass="svg" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="134.0" prefWidth="710.0" spacing="25.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="162.0" prefWidth="234.0" spacing="5.0" styleClass="tab">
                      <children>
                         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="166.0" text="client" />
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0">
                            <children>
                               <VBox>
                                  <children>
-                                    <Label prefHeight="16.0" prefWidth="205.0" text="nom" />
+                                    <Label prefHeight="16.0" prefWidth="223.0" text="nom" />
                                     <TextField fx:id="clientNameTF" />
                                  </children>
                               </VBox>
@@ -55,14 +71,14 @@
                      </padding>
                   </VBox>
                   <Pane prefHeight="186.0" prefWidth="16.0" HBox.hgrow="ALWAYS" />
-                  <HBox alignment="CENTER" prefHeight="198.0" prefWidth="320.0" spacing="5.0" styleClass="tab">
+                  <HBox alignment="CENTER" fillHeight="false" prefHeight="147.0" prefWidth="305.0" spacing="5.0" styleClass="tab">
                      <children>
-                        <ImageView fx:id="medicineIV" fitHeight="150.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="medicineIV" fitHeight="114.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/medicine.png" />
                            </image>
                         </ImageView>
-                        <VBox alignment="CENTER" prefHeight="188.0" prefWidth="132.0" HBox.hgrow="ALWAYS">
+                        <VBox alignment="CENTER" prefHeight="143.0" prefWidth="172.0" HBox.hgrow="ALWAYS">
                            <children>
                               <VBox prefHeight="99.0" prefWidth="125.0">
                                  <children>
@@ -88,21 +104,20 @@
                      </padding>
                   </HBox>
                   <Pane prefHeight="186.0" prefWidth="22.0" HBox.hgrow="ALWAYS" />
-                  <VBox alignment="CENTER" prefHeight="186.0" prefWidth="201.0">
+                  <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="198.0" prefWidth="199.0" styleClass="tab">
                      <children>
-                        <HBox alignment="CENTER" spacing="15.0">
-                           <children>
-                              <Button fx:id="onValidate" mnemonicParsing="false" onAction="#onValidate" prefHeight="24.0" prefWidth="76.0" styleClass="green" text="valider" />
-                              <Button mnemonicParsing="false" onAction="#onCancel" prefHeight="24.0" prefWidth="78.0" styleClass="red" text="anuller" />
-                           </children>
-                        </HBox>
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="166.0" text="mode de paiement" />
+                        <ComboBox fx:id="paymentBox" prefWidth="150.0" />
                      </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
                   </VBox>
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <HBox alignment="CENTER" styleClass="tab">
+                  <HBox alignment="CENTER">
                      <children>
                         <Label>
                            <graphic>
@@ -132,9 +147,12 @@
                               <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="118.0" text="quantite" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-border-radius: 10;" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="medicinesBox" prefHeight="200.0" prefWidth="100.0" />
+                              <VBox fx:id="medicinesBox" prefHeight="200.0" prefWidth="100.0" spacing="2.0">
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding></VBox>
                            </content>
                         </ScrollPane>
                      </children>
@@ -152,11 +170,24 @@
                               <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="118.0" text="quantite" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-border-radius: 10;" VBox.vgrow="ALWAYS">
                            <content>
-                              <VBox fx:id="chosenMedicinesBox" prefHeight="200.0" prefWidth="100.0" />
+                              <VBox fx:id="chosenMedicinesBox" prefHeight="200.0" prefWidth="100.0" spacing="2.0">
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding></VBox>
                            </content>
                         </ScrollPane>
+                        <HBox alignment="CENTER" spacing="15.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onDelete" prefHeight="24.0" styleClass="red" text="supprimer" />
+                              <Button mnemonicParsing="false" onAction="#onCancel" prefHeight="24.0" styleClass="red" text="anuller" />
+                              <Button fx:id="onValidate" mnemonicParsing="false" onAction="#onValidate" prefHeight="24.0" styleClass="green" text="valider" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </HBox>
                      </children>
                      <padding>
                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

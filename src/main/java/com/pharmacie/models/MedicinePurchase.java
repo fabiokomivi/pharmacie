@@ -44,7 +44,9 @@ public class MedicinePurchase {
     }
 
     public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
+        if(purchase != null) {
+            this.purchase = purchase;
+        }
     }
 
     public Medicine getMedicine() {

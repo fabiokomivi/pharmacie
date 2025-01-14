@@ -17,21 +17,14 @@ public class MedicinePurchaseController {
     }
 
     // Ajouter un achat de médicament
-    public void addMedicinePurchase(Purchase purchase, Medicine medicine, int quantity) {
-        MedicinePurchase medicinePurchase = new MedicinePurchase(purchase, medicine, quantity);
+    public void saveMedicinePurchase(MedicinePurchase medicinePurchase) {
         medicinePurchaseService.saveMedicinePurchase(medicinePurchase);
     }
 
     // Mettre à jour un achat de médicament
-    public void updateMedicinePurchase(int id, Purchase purchase, Medicine medicine, int quantity) {
-        MedicinePurchase medicinePurchase = medicinePurchaseService.getMedicinePurchaseById(id);
-        if (medicinePurchase != null) {
-            medicinePurchase.setPurchase(purchase);
-            medicinePurchase.setMedicine(medicine);
-            medicinePurchase.setQuantity(quantity);
+    public void updateMedicinePurchase( MedicinePurchase medicinePurchase) {
             medicinePurchaseService.updateMedicinePurchase(medicinePurchase);
         }
-    }
 
     // Supprimer un achat de médicament
     public void deleteMedicinePurchase(int id) {

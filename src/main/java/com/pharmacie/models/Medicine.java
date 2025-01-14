@@ -1,6 +1,8 @@
 package com.pharmacie.models;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +20,14 @@ public class Medicine extends BaseEntity {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "threshold", nullable = true)
+    private int threshold;
+
+    @Column(name = "image", nullable = true)
+    private String image;
+
     @OneToMany(mappedBy = "medicine", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OrderBy("exp_date ASC")
     private Set<Stock> stocks = new HashSet<>();
 
     @OneToMany(mappedBy = "medicine", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)  // Corrected typo from 'purchasesLinsk'
@@ -55,6 +64,14 @@ public class Medicine extends BaseEntity {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String imagePath) {
+        this.image = imagePath;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -86,13 +103,31 @@ public class Medicine extends BaseEntity {
     }
 
     public void addPurchaseLink(MedicinePurchase purchaseLink) {
-        this.purchasesLink.add(purchaseLink);
-        purchaseLink.setMedicine(this);
+        if(purchaseLink != null) {
+            this.purchasesLink.add(purchaseLink);
+            purchaseLink.setMedicine(this);
+        }
     }
 
     public void removePurchaseLink(MedicinePurchase purchaseLink) {
         this.purchasesLink.remove(purchaseLink);
-        purchaseLink.setMedicine(null);
+        //purchaseLink.setMedicine(null);
+    }
+
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
+    }
+
+    public int getThreshold() {
+        return threshold;
+    }
+
+    public boolean hasPurchase(Purchase purchase) {
+        for(MedicinePurchase medicinePurchase : purchasesLink) {
+            if(purchase.getId()==medicinePurchase.getMedicine().getId())
+                return true;
+        }
+        return false;
     }
 
     // Méthode toString pour le débogage
@@ -100,6 +135,7 @@ public class Medicine extends BaseEntity {
     public String toString() {
         return "Medicine{" +
                 "id=" + this.id +
+                ", stock =" + this.getStock() +
                 ", name='" + this.name + '\'' +
                 ", price=" + this.price +
                 ", stock =" + this.getStock() +

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pharmacie.FxControllers.topSections.Ventes">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="703.0" text="ventes" />
+            <AnchorPane prefHeight="62.0" prefWidth="860.0">
+               <children>
+                  <HBox alignment="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="54.0">
+                     <children>
+                        <Button fx:id="addPurchaseBtn" mnemonicParsing="false" onAction="#addPurchase" prefHeight="34.0" prefWidth="103.0" text="nouvelle" />
+                        <Button fx:id="editPurchaseBtn" mnemonicParsing="false" onAction="#editPurchase" prefHeight="34.0" prefWidth="103.0" text="modifier" />
+                        <Button fx:id="validatePurchaseBtn" mnemonicParsing="false" onAction="#validatePurchase" prefHeight="34.0" prefWidth="103.0" text="valider" />
+                        <Button fx:id="deletePurchaseBtn" mnemonicParsing="false" onAction="#deletePurchase" prefHeight="34.0" prefWidth="103.0" text="supprimer" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="640.0" layoutY="10.0" prefHeight="54.0">
+                     <children>
+                        <Button fx:id="detailsBtn" mnemonicParsing="false" onAction="#onDetails" prefHeight="34.0" prefWidth="103.0" text="details" />
+                        <Button fx:id="invoiceBtn" mnemonicParsing="false" onAction="#onInvoice" prefHeight="34.0" prefWidth="103.0" text="facture" />
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <VBox prefHeight="393.0" prefWidth="462.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox spacing="10.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <ComboBox fx:id="statusBox" onAction="#onStatusBox" prefWidth="150.0" />
+                              <TextField fx:id="researcher" onAction="#onResearch" />
+                              <DatePicker fx:id="purshaseDate" onAction="#onPurshaseDate" prefHeight="24.0" prefWidth="192.0" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="246.0" text="nom" HBox.hgrow="ALWAYS" />
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="185.0" text="date" HBox.hgrow="ALWAYS" />
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="185.0" text="status" HBox.hgrow="ALWAYS" />
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="185.0" text="total" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox fx:id="purchasesBox" prefHeight="200.0" prefWidth="100.0" />
+                     </content>
+                     <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </padding>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

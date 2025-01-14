@@ -1,3 +1,4 @@
+com/pharmacie/FxControllers/pops/ClientChoose.class
 com/pharmacie/services/MedicineService.class
 com/pharmacie/FxControllers/cards/UserCard.class
 com/pharmacie/FxControllers/authentify/SignUp.class
@@ -5,6 +6,7 @@ com/pharmacie/FxControllers/cards/MedicineStockCard.class
 com/pharmacie/FxControllers/sections/ProductFx.class
 com/pharmacie/controllers/ClientController.class
 com/pharmacie/dao/StockDAO.class
+com/pharmacie/FxControllers/pops/CreatePayment.class
 com/pharmacie/controllers/PaymentModeController.class
 com/pharmacie/FxControllers/sections/StockFx.class
 com/pharmacie/dao/SupplierCategoryDAO.class
@@ -20,6 +22,7 @@ com/pharmacie/FxControllers/boards/SideBoard.class
 com/pharmacie/FxControllers/cards/CategorySupplierCard.class
 com/pharmacie/models/Role.class
 com/pharmacie/dao/UserRoleDAO.class
+com/pharmacie/FxControllers/pops/CreatePurchase$1.class
 com/pharmacie/FxControllers/pops/CreateStock.class
 com/pharmacie/controllers/MedicineController.class
 com/pharmacie/FxControllers/pops/forgot.class
@@ -32,6 +35,7 @@ com/pharmacie/controllers/StockController.class
 com/pharmacie/dao/SupplierDAO.class
 com/pharmacie/dao/ClientDAO.class
 com/pharmacie/models/Purchase.class
+com/pharmacie/FxControllers/pops/CreateMedicine.class
 com/pharmacie/dao/PaymentModeDAO.class
 com/pharmacie/session/SessionUtil.class
 com/pharmacie/utilities/VarWrapper.class
@@ -41,6 +45,7 @@ com/pharmacie/models/Stock.class
 com/pharmacie/utilities/Updatable.class
 com/pharmacie/models/Medicine.class
 com/pharmacie/utilities/BehaviorSetter.class
+com/pharmacie/FxControllers/pops/CreatePurchase.class
 com/pharmacie/FxControllers/cards/SupplierCardFx.class
 com/pharmacie/FxControllers/cards/StockCard.class
 com/pharmacie/services/MedicinePurchaseService.class
@@ -52,12 +57,16 @@ com/pharmacie/dao/LoginDAO.class
 com/pharmacie/FxControllers/sections/UserFx.class
 com/pharmacie/services/ClientService.class
 com/pharmacie/models/Login.class
+com/pharmacie/FxControllers/cards/PurchaseCard.class
 com/pharmacie/models/MedicinePurchase.class
+com/pharmacie/FxControllers/cards/MedicinePurchaseCard.class
 com/pharmacie/controllers/LoginController.class
 com/pharmacie/controllers/UserRoleController.class
+com/pharmacie/FxControllers/cards/MedicinePurchasedCard.class
 com/pharmacie/App.class
 com/pharmacie/services/SupplierService.class
 com/pharmacie/dao/CategoryDAO.class
+com/pharmacie/FxControllers/sections/PaymentFx.class
 com/pharmacie/utilities/OneSelectable.class
 com/pharmacie/controllers/RoleController.class
 com/pharmacie/FxControllers/sections/SupplierFx.class
@@ -71,9 +80,10 @@ com/pharmacie/utilities/Dialogs.class
 com/pharmacie/models/SupplierCategory.class
 com/pharmacie/dao/GenericDAO.class
 com/pharmacie/util/HibernateUtil.class
+com/pharmacie/utilities/ImageHelper.class
+com/pharmacie/FxControllers/cards/PaymentCard.class
 com/pharmacie/models/BaseEntity.class
 com/pharmacie/services/PurchaseService.class
-com/pharmacie/FxControllers/pops/CreateMedecine.class
 com/pharmacie/test.class
 com/pharmacie/dao/MedicinePurchaseDAO.class
 com/pharmacie/services/CategoryService.class
@@ -81,6 +91,7 @@ com/pharmacie/FxControllers/pops/CreateCategory.class
 com/pharmacie/controllers/SupplierController.class
 com/pharmacie/FxControllers/cards/MedicineCardFx.class
 com/pharmacie/models/PaymentMode.class
+com/pharmacie/FxControllers/cards/ClientCard.class
 com/pharmacie/models/UserRole.class
 com/pharmacie/FxControllers/cards/MedicineCategoryCard.class
 com/pharmacie/services/UserService.class
@@ -91,4 +102,3 @@ com/pharmacie/dao/UserDAO.class
 com/pharmacie/FxControllers/topSections/Gestion.class
 com/pharmacie/FxControllers/sections/CategoryFx.class
 com/pharmacie/dao/RoleDAO.class
-com/pharmacie/util/EntityManagerUtil.class

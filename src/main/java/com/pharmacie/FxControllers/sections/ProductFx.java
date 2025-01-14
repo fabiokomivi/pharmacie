@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.pharmacie.FxControllers.cards.MedicineCardFx;
-import com.pharmacie.FxControllers.pops.CreateMedecine;
+import com.pharmacie.FxControllers.pops.CreateMedicine;
 import com.pharmacie.controllers.MedicineController;
 import com.pharmacie.models.Medicine;
 import com.pharmacie.utilities.BehaviorSetter;
@@ -117,7 +117,7 @@ public class ProductFx implements Initializable, Updatable {
 
         Stage stage = BehaviorSetter.ModalDraggableTransparent(root);
     
-        CreateMedecine windowController = windowLoader.getController();
+        CreateMedicine windowController = windowLoader.getController();
     
         if (edit) {
             MedicineCardFx selectMedicineCard = null;

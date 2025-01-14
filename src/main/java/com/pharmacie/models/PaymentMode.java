@@ -19,7 +19,7 @@ public class PaymentMode {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @OneToMany(mappedBy = "paymentMode", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "paymentMode", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Purchase> purchases = new ArrayList<>();
 
     // Constructeur par défaut

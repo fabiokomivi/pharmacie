@@ -60,7 +60,7 @@
 /* Style lorsque le bouton est enfoncé (pressed) */
 .submit-button:pressed {
     -fx-background-color: #097909; /* Bleu foncé */
-    -fx-border-color: white; /* Bordure encore plus foncée */
+    -fx-border-color: #097909; /* Bordure encore plus foncée */
     -fx-text-fill: white;
 }
 .hyperlink {
@@ -70,4 +70,14 @@
 .hyperlink:hover {
     -fx-text-fill: #097909;
     -fx-underline: true;
+}
+
+
+.round {
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-background-color: white;
+    -fx-padding: 6px 6px 6px 6px;
+    -fx-border-color: #097909;
+    -fx-border-width: 2;
 }

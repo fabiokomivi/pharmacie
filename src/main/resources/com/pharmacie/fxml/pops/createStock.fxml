@@ -15,7 +15,7 @@
    <children>
       <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="330.0">
          <children>
-            <Label fx:id="title" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="246.0" text="produit" HBox.hgrow="ALWAYS">
+            <Label fx:id="title" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="246.0" text="stock" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

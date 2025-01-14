@@ -4,14 +4,14 @@
     -fx-stroke-linejoin: round;    /* Style de l'angle du contour */
     -fx-scale-x: 1; /* Échelle horizontale */
     -fx-scale-y: 1; /* Échelle verticale */
-    -fx-stroke: black;    
+    -fx-stroke: white;    
 }
 
 .card {
     -fx-background-color: #8fc886; /* Correction de l'orthographe */
+    -fx-border-color: #097909;
+    -fx-border-width: 2;
     -fx-padding: 10;
-    -fx-border-color: #8fc886;
-    -fx-border-width: 1;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-cursor: hand;
@@ -36,7 +36,7 @@
 
 .card.svg,
 .card * .svg {
-    -fx-stroke: black;             /* Couleur du contour */
+    -fx-stroke: white;             /* Couleur du contour */
     -fx-fill: transparent;
 }
 
@@ -106,3 +106,11 @@
     -fx-border-radius: 10px;
 
 }
+
+.close {
+    -fx-border-radius:60px;
+    -fx-background-radius: 60px;
+    -fx-background-color:red;
+    -fx-padding: 6px 5px 3px 5px
+}
+
