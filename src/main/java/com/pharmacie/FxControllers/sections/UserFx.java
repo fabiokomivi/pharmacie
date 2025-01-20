@@ -2,6 +2,7 @@ package com.pharmacie.FxControllers.sections;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.pharmacie.FxControllers.cards.UserCard;
@@ -18,22 +19,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class UserFx implements Initializable{
 
     UserController userController = new UserController();
+    List<User> allUsers = userController.getAllUsers();
 
     @FXML
     private ToggleButton multipleSelector;
 
-    @FXML
-    private ChoiceBox<?> roleChooser;
 
     @FXML
     private TextField searcher;
@@ -44,11 +43,13 @@ public class UserFx implements Initializable{
     @FXML
     void addUser(ActionEvent event) throws IOException {
         openWindow(false);
+        userController.getAllUsers();
     }
 
     @FXML
     void editUser(ActionEvent event) throws IOException {
         openWindow(true);
+        userController.getAllUsers();
     }
 
     @FXML
@@ -76,6 +77,7 @@ public class UserFx implements Initializable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        initializeSearcher();
     }
 
 
@@ -186,6 +188,27 @@ public class UserFx implements Initializable{
         }
     }
 
-// supprimer reste a implementer
+
+    private void initializeSearcher() {
+        searcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchUsers(newValue.trim().toLowerCase());
+        });
+    }
+
+    
+    private void searchUsers(String query) {
+        // Effacer les résultats actuels
+        userGrid.getChildren().clear();
+    
+        for (User user : allUsers) {
+            if (user.getName().toLowerCase().contains(query)) {
+                try {
+                    addUserCard(user);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }

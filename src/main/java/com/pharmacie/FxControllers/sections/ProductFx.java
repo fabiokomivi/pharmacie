@@ -21,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
@@ -31,9 +30,7 @@ import javafx.stage.Stage;
 public class ProductFx implements Initializable, Updatable {
 
     MedicineController medicineController = new MedicineController();
-
-    @FXML
-    private ChoiceBox<?> productChoice;
+    List<Medicine> allMedicines = medicineController.getAllMedicines();
 
     @FXML
     private FlowPane medicinesGrid;
@@ -52,11 +49,13 @@ public class ProductFx implements Initializable, Updatable {
     @FXML
     void deleteProduct(ActionEvent event) throws IOException {
         deleteMedicineCard();
+        allMedicines = medicineController.getAllMedicines();
     }
 
     @FXML
     void editProduct(ActionEvent event) throws IOException {
         openWindow(true);
+        allMedicines = medicineController.getAllMedicines();
     }
 
     @FXML
@@ -72,6 +71,7 @@ public class ProductFx implements Initializable, Updatable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadMedicines();
+        initializeSearcher();;
     }
 
     private void addMedicineCard(Medicine medicine) throws IOException {
@@ -98,7 +98,7 @@ public class ProductFx implements Initializable, Updatable {
     }
 
     private void loadMedicines() {
-        for(Medicine medicine : medicineController.getAllMedicines()) {
+        for(Medicine medicine : allMedicines) {
             try {
                 addMedicineCard(medicine);
             } catch (IOException e) {
@@ -225,8 +225,35 @@ public class ProductFx implements Initializable, Updatable {
         }
     }
 
+    private void initializeSearcher() {
+        searcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchProducts(newValue.trim().toLowerCase());
+        });
+    }
+
+    
+    private void searchProducts(String query) {
+        // Effacer les résultats actuels
+        medicinesGrid.getChildren().clear();
+    
+        // Obtenir tous les médicaments
+        
+    
+        // Parcourir les médicaments pour trouver ceux qui correspondent à la recherche
+        for (Medicine medicine : allMedicines) {
+            if (medicine.getName().toLowerCase().contains(query)) {
+                try {
+                    addMedicineCard(medicine);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     @Override
     public void update() {
+        allMedicines = medicineController.getAllMedicines();
         medicinesGrid.getChildren().clear();
         loadMedicines();
     }

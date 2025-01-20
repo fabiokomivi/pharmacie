@@ -20,6 +20,7 @@ import com.pharmacie.models.MedicinePurchase;
 import com.pharmacie.models.PaymentMode;
 import com.pharmacie.models.Purchase;
 import com.pharmacie.models.Stock;
+import com.pharmacie.session.SessionUtil;
 import com.pharmacie.utilities.BehaviorSetter;
 import com.pharmacie.utilities.Dialogs;
 import com.pharmacie.utilities.InvoiceGenerator;
@@ -48,6 +49,8 @@ public class Ventes implements Initializable{
     MedicineController medicineController = new MedicineController();
     InvoiceGenerator invoiceGenerator = new InvoiceGenerator();
 
+    List<Purchase> allPurchases  = purchaseController.getAllPurchases();
+
     @FXML
     private Button addPurchaseBtn;
 
@@ -64,13 +67,7 @@ public class Ventes implements Initializable{
     private Button invoiceBtn;
 
     @FXML
-    private DatePicker purshaseDate;
-
-    @FXML
     private TextField researcher;
-
-    @FXML
-    private ComboBox<?> statusBox;
 
     @FXML
     private Button validatePurchaseBtn;
@@ -125,9 +122,6 @@ public class Ventes implements Initializable{
             e.printStackTrace();
         }
     }
-
-
-
 
 
     @FXML
@@ -257,6 +251,7 @@ public class Ventes implements Initializable{
             updatePurchaseCard(selectedPurchaseCard, selectedPurchase);
     
             // Message de succès
+            SessionUtil.updateCurrentUser();
             Dialogs.showSimpleMessage("Vente validée avec succès.");
         }
         else {
@@ -271,6 +266,7 @@ public class Ventes implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadPurchases();
+        initializeSearcher();;
     }
 
     public void openWindow(boolean edit) throws IOException {
@@ -300,7 +296,10 @@ public class Ventes implements Initializable{
                         Purchase updatedPurchase = windowController.getPurchase();
                         if(updatedPurchase != null) {
                             PurchaseCard unwrapedPurchaseCard = selectedCardWrapper.getValue();
+                            updatedPurchase.calculateTotal();
+                            allPurchases.add(updatedPurchase);
                             updatePurchaseCard(unwrapedPurchaseCard, updatedPurchase);
+                            allPurchases  = purchaseController.getAllPurchases();
                         }
                     });
 
@@ -311,6 +310,9 @@ public class Ventes implements Initializable{
             // Vérifier si une carte sélectionnée a été trouvée
             if (selectPurchaseCard == null) {
                 Dialogs.showAllowMessage("aucun achat selectionné");
+                return;
+            } else if(selectPurchaseCard.getPurchase().getStatus()) {
+                Dialogs.showSimpleMessage("cette vente est deja validée");
                 return;
             }
 
@@ -353,7 +355,7 @@ public class Ventes implements Initializable{
     }
 
     private void loadPurchases() {
-        for(Purchase purchase : purchaseController.getAllPurchases()) {
+        for(Purchase purchase : allPurchases) {
             try {
                 addPurchaseCard(purchase);
             } catch (IOException e) {
@@ -380,4 +382,44 @@ public class Ventes implements Initializable{
     private void updatePurchaseCard(PurchaseCard purchaseCard, Purchase purchase) {
         purchaseCard.setData(purchase);
     }
+
+    private void initializeSearcher() {
+        researcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchMedicines(newValue.trim().toLowerCase());
+        });
+    }
+
+    
+    private void searchMedicines(String query) {
+        // Si la requête est null ou vide, charger tous les achats
+        if (query == null || query.trim().isEmpty()) {
+            loadPurchases();
+            return;
+        }
+    
+        // Effacer les résultats actuels
+        purchasesBox.getChildren().clear();
+    
+        // Variable pour vérifier si un résultat a été trouvé
+        boolean foundMatch = false;
+    
+        // Parcourir les achats pour trouver ceux qui correspondent à la recherche
+        for (Purchase purchase : allPurchases) {
+            // Vérification si le client est non null et si le nom correspond à la requête
+            if (purchase.getClient() != null && purchase.getClient().getName().toLowerCase().contains(query.toLowerCase())) {
+                try {
+                    addPurchaseCard(purchase);
+                    foundMatch = true; // Indiquer qu'un résultat a été trouvé
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    
+        // Si aucun résultat n'a été trouvé, charger tous les achats
+        if (!foundMatch) {
+            loadPurchases();
+        }
+    }
+    
 }

@@ -16,6 +16,7 @@ public class UserDAO {
         try {
             transaction = session.beginTransaction();
             session.persist(user);  // Utilisation de persist() pour insérer
+            session.flush();
             transaction.commit();  // Valider la transaction
         } catch (RuntimeException e) {
             if (transaction != null) {
@@ -50,6 +51,7 @@ public class UserDAO {
         try {
             transaction = session.beginTransaction();
             session.merge(user);  // Utilisation de merge() pour mettre à jour
+            session.flush();
             transaction.commit();  // Valider la transaction
         } catch (RuntimeException e) {
             if (transaction != null) {

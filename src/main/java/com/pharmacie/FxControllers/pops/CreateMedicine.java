@@ -202,11 +202,22 @@ public class CreateMedicine implements Initializable, OneSelectable{
             new FileChooser.ExtensionFilter("Tous les fichiers", "*.*")
         );
     
-        // Définir le répertoire initial au répertoire courant
-        String currentDir = System.getProperty("user.dir");
-        File initialDirectory = new File(currentDir);
-        if (initialDirectory.exists() && initialDirectory.isDirectory()) {
-            fileChooser.setInitialDirectory(initialDirectory);
+        try {
+            // Récupérer le dossier depuis les ressources
+            URL resourceURL = getClass().getResource("/com/pharmacie/images/medicines");
+            if (resourceURL != null) {
+                File initialDirectory = new File(resourceURL.toURI());
+                if (initialDirectory.exists() && initialDirectory.isDirectory()) {
+                    fileChooser.setInitialDirectory(initialDirectory);
+                } else {
+                    System.err.println("Le répertoire initial spécifié n'existe pas ou n'est pas valide.");
+                }
+            } else {
+                System.err.println("Impossible de localiser le dossier des ressources.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors de la définition du répertoire initial : " + e.getMessage());
         }
     
         // Ouvrir la boîte de dialogue pour sélectionner un fichier
@@ -226,7 +237,7 @@ public class CreateMedicine implements Initializable, OneSelectable{
     
                 // Mettre à jour le chemin relatif de l'image
                 imagePath = selectedFile.getName();
-                System.out.println(imagePath); 
+                System.out.println(imagePath);
     
                 // Charger et afficher l'image dans l'ImageView
                 Image image = new Image(targetPath.toUri().toString());
@@ -237,6 +248,7 @@ public class CreateMedicine implements Initializable, OneSelectable{
             }
         }
     }
+    
     
 }
 

@@ -14,11 +14,6 @@ public class ClientController {
         this.clientService = new ClientService();  // Instancier le service
     }
 
-    // Ajouter un client
-    public void addClient(String name, String email, String contact) {
-        Client client = new Client(name, contact, email);
-        clientService.saveClient(client);
-    }
 
     // Mettre à jour un client
     public void updateClient(int id, String name, String email, String contact) {
@@ -44,5 +39,9 @@ public class ClientController {
     // Afficher un client par ID
     public Client getClientById(int id) {
         return clientService.getClientById(id);
+    }
+
+    public void save(Client client) {
+        clientService.saveClient(client);
     }
 }

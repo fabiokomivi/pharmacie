@@ -45,6 +45,7 @@ public class User extends BaseEntity{
     private Set<Purchase> purchases = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OrderBy("started_at ASC")
     private Set<Login> logins = new HashSet<>();
 
     // Constructeurs

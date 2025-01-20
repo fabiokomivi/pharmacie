@@ -65,7 +65,7 @@ public class InvoiceGenerator {
         document.add(pharmacyName);
 
         // Add title
-        Paragraph title = new Paragraph("Invoice")
+        Paragraph title = new Paragraph("Facture")
                 .setFont(boldFont)
                 .setFontSize(10) // Smaller font size for ticket
                 .setTextAlignment(TextAlignment.CENTER);
@@ -101,9 +101,9 @@ public class InvoiceGenerator {
         table.setWidth(UnitValue.createPercentValue(100));
 
         // Add table headers
-        table.addHeaderCell(createHeaderCell("Item", boldFont));
-        table.addHeaderCell(createHeaderCell("Qty", boldFont));
-        table.addHeaderCell(createHeaderCell("Price", boldFont));
+        table.addHeaderCell(createHeaderCell("Produit", boldFont));
+        table.addHeaderCell(createHeaderCell("Qte", boldFont));
+        table.addHeaderCell(createHeaderCell("Prix", boldFont));
 
         // Add each medicine purchase
         for (MedicinePurchase mp : purchase.getMedicinesLink()) {

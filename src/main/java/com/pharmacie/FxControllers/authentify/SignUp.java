@@ -11,6 +11,7 @@ import com.pharmacie.controllers.UserRoleController;
 import com.pharmacie.models.User;
 import com.pharmacie.models.Role;
 import com.pharmacie.models.UserRole;
+import com.pharmacie.utilities.Dialogs;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -83,21 +84,11 @@ public class SignUp {
             user.setRole(role);
             userController.saveUser(user);            
 
-            messageController.setMessage("inscription reussie");
+            Dialogs.showSimpleMessage("inscription reussie");
         } catch (Exception e) {
             System.out.println(e);
-            messageController.setMessage("inscription echouée");
+            Dialogs.showSimpleMessage("inscription echouée");
         }
-        finally {
-            // Créer et afficher la scène
-            Scene scene = new Scene(root, 300, 120);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setScene(scene);
-            stage.setTitle("");
-            stage.show();
-        }    
     }
 
     void makeRed(TextField field) {

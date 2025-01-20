@@ -2,6 +2,7 @@ package com.pharmacie.FxControllers.sections;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.pharmacie.FxControllers.cards.PaymentCard;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 public class PaymentFx implements Initializable{
 
     PaymentModeController paymentModeController = new PaymentModeController();
+    List<PaymentMode> allPaymentsMode = paymentModeController.getAllPaymentModes();
 
     @FXML
     private FlowPane paymentsGrid;
@@ -34,11 +36,13 @@ public class PaymentFx implements Initializable{
     @FXML
     void addPayment(ActionEvent event) throws IOException {
         openWindow();
+        allPaymentsMode = paymentModeController.getAllPaymentModes();
     }
 
     @FXML
     void removePayment(ActionEvent event) {
-        deleteStock();
+        deletePaymentMode();
+        allPaymentsMode = paymentModeController.getAllPaymentModes();
     }
 
     @Override
@@ -48,10 +52,11 @@ public class PaymentFx implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        initializeSearcher();;
     }
 
     private void loadPaymentsModes() throws IOException {
-        for(PaymentMode paymentMode : paymentModeController.getAllPaymentModes()) {
+        for(PaymentMode paymentMode : allPaymentsMode) {
             addPaymentCard(paymentMode);
         }
     }
@@ -114,7 +119,7 @@ public class PaymentFx implements Initializable{
         paymentCard.toggle();
     }
 
-    public void deleteStock() {
+    public void deletePaymentMode() {
         PaymentCard selectedPaymentCard = null;
     
         // Parcours des enfants de la grille pour trouver le mode de paiement sélectionné
@@ -143,6 +148,27 @@ public class PaymentFx implements Initializable{
             }
             if (toRemove != null) {
                 paymentsGrid.getChildren().remove(toRemove);
+            }
+        }
+    }
+
+    private void initializeSearcher() {
+        searcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchPayments(newValue.trim().toLowerCase());
+        });
+    }
+
+    private void searchPayments(String query) {
+        // Effacer les résultats actuels
+        paymentsGrid.getChildren().clear();
+    
+        // Obtenir tous les médicaments
+        
+    
+        // Parcourir les médicaments pour trouver ceux qui correspondent à la recherche
+        for (PaymentMode paymentMode : allPaymentsMode) {
+            if (paymentMode.getName().toLowerCase().contains(query)) {
+                addPaymentCard(paymentMode);
             }
         }
     }

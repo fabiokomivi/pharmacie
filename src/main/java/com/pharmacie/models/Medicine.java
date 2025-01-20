@@ -2,7 +2,6 @@ package com.pharmacie.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -128,6 +127,10 @@ public class Medicine extends BaseEntity {
                 return true;
         }
         return false;
+    }
+
+    public boolean isCritic(){
+        return threshold >= getStock();
     }
 
     // Méthode toString pour le débogage

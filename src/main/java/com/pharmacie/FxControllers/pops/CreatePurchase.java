@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import com.itextpdf.layout.element.Image;
 import com.pharmacie.FxControllers.cards.MedicinePurchaseCard;
 import com.pharmacie.FxControllers.cards.MedicinePurchasedCard;
-import com.pharmacie.FxControllers.cards.StockCard;
 import com.pharmacie.controllers.MedicineController;
 import com.pharmacie.controllers.MedicinePurchaseController;
 import com.pharmacie.controllers.PaymentModeController;
 import com.pharmacie.controllers.PurchaseController;
-import com.pharmacie.dao.PaymentModeDAO;
 import com.pharmacie.models.Client;
 import com.pharmacie.models.Medicine;
 import com.pharmacie.models.MedicinePurchase;
@@ -49,6 +48,9 @@ public class CreatePurchase implements Initializable{
     Purchase purchase = null;
     Medicine medicineSelected = null;
     Client selectionedClient = null;
+    ImageHelper imageHelper = new ImageHelper();
+
+    List<Medicine> allMedicines = medicineController.getAllMedicines();
 
     @FXML
     private VBox chosenMedicinesBox;
@@ -166,7 +168,7 @@ public class CreatePurchase implements Initializable{
     @FXML
     void onValidate(ActionEvent event) {
         validatePurchase();
-        Dialogs.showSimpleMessage("La commande a été mise à jour avec succès !");
+        SessionUtil.updateCurrentUser();
         closeWindow(event); // Fermer la fenêtre après validation
     }
 
@@ -281,11 +283,11 @@ public class CreatePurchase implements Initializable{
             if(medicinePurchaseCard.isCardSelected()) {
                 medicineSelected = medicinePurchaseCard.getMedicine();
                 medicineNameLabel.setText(medicineSelected.getName());
-                medicineIV.setImage(ImageHelper.loadImageFromResources(medicineSelected.getImage()));
+                medicineIV.setImage(imageHelper.loadImageFromResources(medicineSelected.getImage()));
             }
             else {
                 medicineSelected = null;
-                medicineIV.setImage(ImageHelper.loadImageFromResources(null));
+                medicineIV.setImage(imageHelper.loadImageFromResources(null));
             }
 
     }
@@ -316,7 +318,7 @@ public class CreatePurchase implements Initializable{
     }
 
     private void loadMedicines() {
-        for(Medicine medicine : medicineController.getAllMedicines()) {
+        for(Medicine medicine : allMedicines) {
             try {
                 addMedicineCard(medicine);
             } catch (IOException e) {
@@ -327,7 +329,7 @@ public class CreatePurchase implements Initializable{
 
     private void loadPaymentModes() {
         List<PaymentMode> paymentModes = paymentModeController.getAllPaymentModes();
-        paymentBox.getItems().addAll(paymentModes);
+        //paymentBox.getItems().addAll(paymentModes);
 
         paymentBox.setConverter(new StringConverter<>() {
             @Override
@@ -354,6 +356,7 @@ public class CreatePurchase implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         loadMedicines();
         loadPaymentModes();
+        initializeSearcher();;
     }
 
     private boolean checkStock() {
@@ -389,6 +392,7 @@ public class CreatePurchase implements Initializable{
             purchase.setUser(SessionUtil.getCurrentUser()); // Associer l'utilisateur connecté
             purchase.setPaymentMode((PaymentMode) paymentBox.getValue()); // Associer le mode de paiement sélectionné
             purchase.setClient(selectionedClient);
+            purchase.calculateTotal();
             purchaseController.savePurchase(purchase); // Sauvegarder l'achat
         } else {
             // Mettre à jour le mode de paiement
@@ -439,12 +443,37 @@ public class CreatePurchase implements Initializable{
     
         // Recalculer le total et mettre à jour la commande
         purchase.calculateTotal();
-        //purchaseController.updatePurchase(purchase);
+
     
-        // Optionnel : Rafraîchir l'achat pour s'assurer que toutes les données sont synchronisées
-        // purchase = purchaseController.getPurchaseById(purchase.getId());
-    
+        purchaseController.updatePurchase(purchase);
+        purchase = purchaseController.getPurchaseById(purchase.getId());
         Dialogs.showSimpleMessage("Commande validée avec succès !");
+    }
+
+    private void initializeSearcher() {
+        searcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchMedicines(newValue.trim().toLowerCase());
+        });
+    }
+
+    
+    private void searchMedicines(String query) {
+        // Effacer les résultats actuels
+        medicinesBox.getChildren().clear();
+    
+        // Obtenir tous les médicaments
+        
+    
+        // Parcourir les médicaments pour trouver ceux qui correspondent à la recherche
+        for (Medicine medicine : allMedicines) {
+            if (medicine.getName().toLowerCase().contains(query)) {
+                try {
+                    addMedicineCard(medicine);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     
 }

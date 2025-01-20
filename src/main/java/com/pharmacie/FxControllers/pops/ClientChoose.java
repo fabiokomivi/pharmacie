@@ -3,10 +3,14 @@ package com.pharmacie.FxControllers.pops;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import com.pharmacie.FxControllers.cards.ClientCard;
 import com.pharmacie.controllers.ClientController;
 import com.pharmacie.models.Client;
+import com.pharmacie.utilities.Dialogs;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +24,9 @@ import javafx.stage.Stage;
 
 public class ClientChoose implements Initializable{
 
+    private static final String EMAIL_REGEX = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+
     ClientController clientController = new ClientController();
 
     Client client = null;
@@ -29,6 +36,66 @@ public class ClientChoose implements Initializable{
 
     @FXML
     private TextField searcher;
+
+    @FXML
+    private TextField contactTF;
+
+    @FXML
+    private TextField emailTF;
+
+    @FXML
+    private TextField nameTF;
+
+
+    @FXML
+    void addClient(ActionEvent event) {
+        String name = nameTF.getText().trim();
+        String email = emailTF.getText().trim();
+        String contact = contactTF.getText().trim();
+
+        // Vérification que le nom n'est pas vide
+        if (name.isEmpty()) {
+            Dialogs.showSimpleMessage("Le nom est obligatoire !");
+            return;
+        }
+
+        // Validation de l'email s'il est spécifié
+        if (!email.isEmpty() && !EMAIL_PATTERN.matcher(email).matches()) {
+            Dialogs.showSimpleMessage("L'email fourni n'est pas valide !");
+            return;
+        }
+
+        // Validation du contact s'il est spécifié (exemple de validation simple pour un numéro de téléphone)
+        if (!contact.isEmpty() && !contact.matches("\\d{10}")) { // Par exemple, 10 chiffres
+            Dialogs.showSimpleMessage("Le contact invalide");
+            return;
+        }
+
+        // Création d'un nouveau client
+        Client newClient = new Client();
+        newClient.setName(name);
+        newClient.setEmail(email.isEmpty() ? null : email); // Assigner null si vide
+        newClient.setContact(contact.isEmpty() ? null : contact); // Assigner null si vide
+        
+        try {
+            clientController.save(newClient);  
+        } catch (ConstraintViolationException e) {
+            if(e.getConstraintName().equals("uk_ow9p33mvkb9m57k6aol2aep0j"))
+                Dialogs.showSimpleMessage("un client possede deja ce contact");
+            if(e.getConstraintName().equals("uk_srv16ica2c1csub334bxjjb59"))
+                Dialogs.showSimpleMessage("un client possede deja ce email");
+                // org.hibernate.PropertyValueException:
+            return;    
+        }
+
+        
+        try {
+            addClientCard(newClient);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     void onClose(ActionEvent event) {

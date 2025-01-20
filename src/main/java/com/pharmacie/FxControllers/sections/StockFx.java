@@ -34,6 +34,7 @@ public class StockFx implements Initializable, Updatable, OneSelectable {
 
     MedicineController medicineController = new MedicineController();
     StockController stockController = new StockController();
+    List<Medicine> allMedicines = medicineController.getAllMedicines();
 
     @FXML
     private ToggleButton multipleSelector;
@@ -51,6 +52,7 @@ public class StockFx implements Initializable, Updatable, OneSelectable {
     @FXML
     void addStock(ActionEvent event) throws IOException {
         openWindow(false);
+        allMedicines = medicineController.getAllMedicines();
     }
 
     @FXML
@@ -61,6 +63,7 @@ public class StockFx implements Initializable, Updatable, OneSelectable {
     @FXML
     void removeStock(ActionEvent event) {
         deleteStock();
+        allMedicines = medicineController.getAllMedicines();
     }
 
     @Override
@@ -70,10 +73,12 @@ public class StockFx implements Initializable, Updatable, OneSelectable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        initializeSearcher();;
     }
 
     private void loadMedicines() throws IOException {
-        for(Medicine medicine : medicineController.getAllMedicines()) {
+        allMedicines = medicineController.getAllMedicines();
+        for(Medicine medicine : allMedicines) {
             addMedicineStockCard(medicine);
         }
     }
@@ -301,6 +306,33 @@ public class StockFx implements Initializable, Updatable, OneSelectable {
             }
         }
         return nodesToRemove;
+    }
+
+    private void initializeSearcher() {
+        searcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchProducts(newValue.trim().toLowerCase());
+            clearStockBox();
+        });
+    }
+
+    
+    private void searchProducts(String query) {
+        // Effacer les résultats actuels
+        medicinesBox.getChildren().clear();
+    
+        // Obtenir tous les médicaments
+        
+    
+        // Parcourir les médicaments pour trouver ceux qui correspondent à la recherche
+        for (Medicine medicine : allMedicines) {
+            if (medicine.getName().toLowerCase().contains(query)) {
+                try {
+                    addMedicineStockCard(medicine);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }

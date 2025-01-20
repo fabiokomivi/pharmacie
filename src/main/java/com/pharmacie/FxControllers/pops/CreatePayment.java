@@ -29,7 +29,7 @@ public class CreatePayment {
 
     @FXML
     void onClose(ActionEvent event) {
-
+        closeWindow(event);
     }
 
     @FXML

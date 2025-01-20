@@ -32,7 +32,7 @@ public class SupplierFx implements Initializable{
     SupplierController supplierController = new SupplierController();
 
 
-    List<Supplier> supplierList = supplierController.getAllSuppliers();
+    List<Supplier> allSupliers = supplierController.getAllSuppliers();
     
 
     @FXML
@@ -48,16 +48,19 @@ public class SupplierFx implements Initializable{
     @FXML
     void addSupplier(ActionEvent event) throws IOException {
         openWindow(false);
+        allSupliers = supplierController.getAllSuppliers();
     }
 
     @FXML
     void editSupplier(ActionEvent event) throws IOException {
         openWindow(true);
+        allSupliers = supplierController.getAllSuppliers();
     }
 
     @FXML
     void removeSupplier(ActionEvent event) throws IOException {
         deleteSupplierCard();
+        allSupliers = supplierController.getAllSuppliers();
     }
 
     @FXML
@@ -90,12 +93,13 @@ public class SupplierFx implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (Supplier supplier : supplierList)
+        for (Supplier supplier : allSupliers)
             try {
                 addSupplierCard(supplier);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        initializeSearcher();;
     }
 
 
@@ -241,5 +245,31 @@ public class SupplierFx implements Initializable{
 
     public void update() {
         
+    }
+
+    private void initializeSearcher() {
+        searcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchSuppliers(newValue.trim().toLowerCase());
+        });
+    }
+
+    
+    private void searchSuppliers(String query) {
+        // Effacer les résultats actuels
+        supplierGrid.getChildren().clear();
+    
+        // Obtenir tous les médicaments
+        
+    
+        // Parcourir les médicaments pour trouver ceux qui correspondent à la recherche
+        for (Supplier supplier : allSupliers) {
+            if (supplier.getName().toLowerCase().contains(query)) {
+                try {
+                    addSupplierCard(supplier);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

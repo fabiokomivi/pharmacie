@@ -74,6 +74,11 @@ public class MedicinePurchase {
         this.totalPrice = totalPrice;
     }
 
+    @PrePersist
+    void onCreate(){
+        this.totalPrice = medicine.getPrice() * quantity;
+    }
+
     @Override
     public String toString() {
         return "MedicinePurchase{" +

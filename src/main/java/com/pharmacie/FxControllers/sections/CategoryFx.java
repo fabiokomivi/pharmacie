@@ -33,12 +33,10 @@ import com.pharmacie.controllers.CategoryController;
 public class CategoryFx implements Initializable, Updatable{
 
     CategoryController categoryController = new CategoryController();
+    List<Category> allCategories = categoryController.getAllCategories();
 
     @FXML
     private FlowPane categoriesGrid;
-
-    @FXML
-    private ChoiceBox<?> categoryChoice;
 
     @FXML
     private ToggleButton multipleSelector;
@@ -49,11 +47,13 @@ public class CategoryFx implements Initializable, Updatable{
     @FXML
     void addCategory(ActionEvent event) throws IOException {
         openWindow(false);
+        allCategories = categoryController.getAllCategories();
     }
 
     @FXML
     void editCategory(ActionEvent event) throws IOException {
         openWindow(true);
+        allCategories = categoryController.getAllCategories();
     }
 
     @FXML
@@ -81,15 +81,17 @@ public class CategoryFx implements Initializable, Updatable{
     @FXML
     void removeCategory(ActionEvent event) throws IOException {
         deleteCategoryCard();
+        allCategories = categoryController.getAllCategories();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadCategories();
+        initializeSearcher();;
     }
 
     private void loadCategories() {
-        for (Category category : categoryController.getAllCategories())
+        for (Category category : allCategories)
             try {
                 addCatoryCard(category);
             } catch (IOException e) {
@@ -242,8 +244,35 @@ public class CategoryFx implements Initializable, Updatable{
 
     @Override
     public void update() {
+        allCategories = categoryController.getAllCategories();
         categoriesGrid.getChildren().clear();
         loadCategories();
+    }
+
+    private void initializeSearcher() {
+        searcher.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchCategories(newValue.trim().toLowerCase());
+        });
+    }
+
+    
+    private void searchCategories(String query) {
+        // Effacer les résultats actuels
+        categoriesGrid.getChildren().clear();
+    
+        // Obtenir tous les médicaments
+        
+    
+        // Parcourir les médicaments pour trouver ceux qui correspondent à la recherche
+        for (Category category : allCategories) {
+            if (category.getName().toLowerCase().contains(query)) {
+                try {
+                    addCatoryCard(category);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }

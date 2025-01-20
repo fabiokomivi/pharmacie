@@ -16,13 +16,12 @@ import javafx.util.Duration;
 import com.pharmacie.models.User;
 import com.pharmacie.models.Login;
 import com.pharmacie.session.SessionUtil;
-
+import com.pharmacie.utilities.Dialogs;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
 
 import com.pharmacie.controllers.UserController;
-import com.pharmacie.FxControllers.messages.SimpleMessage;
 import com.pharmacie.controllers.LoginController;
 
 public class LogIn {
@@ -82,15 +81,11 @@ public class LogIn {
         if(!checkedAll())
             return;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/pharmacie/fxml/messages/simpleMessage.fxml"));
-        Parent root = loader.load();
-        SimpleMessage messageController = loader.getController();
-
         try {
             User user = userController.getUserByEmail(emailSignInPF.getText());
             if (!user.passwordBelongToMe(passwordSignInPF.getText())) {
                 makeRed(this.passwordSignInPF);
-                messageController.setMessage("mot de passe incorrect");
+                Dialogs.showSimpleMessage("mot de passe incorrect");
             }
             else {
                 SessionUtil.setCurrentUser(user);
@@ -100,16 +95,15 @@ public class LogIn {
                 SessionUtil.setCurrentLogin(login);
 
                 //simulation de deconnexion
-                loginController.endLogin(login);
                 SessionUtil.setCurrentUser(user);
                 SessionUtil.setCurrentLogin(login);
 
 
-                messageController.setMessage("connexion reussie");
+                Dialogs.showSimpleMessage("connexion reussie");
                 this.succes = true;
             }
         } catch (Exception e) {
-            messageController.setMessage("connexion echouée");
+            Dialogs.showSimpleMessage("connexion echouée");
             this.succes = false;
         }
         finally {
@@ -117,16 +111,6 @@ public class LogIn {
                 Stage rootstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 rootstage.close();
                 this.openfen();
-            }
-            else{
-                // Créer et afficher la scène
-                Scene scene = new Scene(root, 300, 120);
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initStyle(StageStyle.UNDECORATED);
-                stage.setScene(scene);
-                stage.setTitle("");
-                stage.show();
             }
         }
 
@@ -170,6 +154,9 @@ public class LogIn {
 
         stage.setScene(scene);
         stage.setTitle("");
+        stage.setOnHidden(e -> { 
+            loginController.endLogin(SessionUtil.getCurrentLogin());
+        });
         stage.show();
     }
 
