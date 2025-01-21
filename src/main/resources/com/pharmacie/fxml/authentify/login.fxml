@@ -53,7 +53,7 @@
                         </Text>
                         <TextField fx:id="emailSignInPF" layoutX="37.0" layoutY="202.0" prefHeight="33.0" prefWidth="243.0" promptText="Email" styleClass="textfield" text="amouzoufabio@gmail.com">
                            <font>
-                              <Font name="System Bold" size="16.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </TextField>
                         <Button layoutX="93.0" layoutY="333.0" mnemonicParsing="false" onAction="#onSignIn" prefHeight="36.0" prefWidth="149.0" styleClass="submit-button" text="Se connecter" textAlignment="CENTER" textFill="#ffeeee" />
